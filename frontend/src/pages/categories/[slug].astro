@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProductsList from "../../components/ProductsList.astro";
+import fetchApi from "../../wrapper/strapi.js";
+
+type ProductType = {
+    documentId: string;
+    title: string;
+    price: number;
+    description: string;
+    rating: number;
+    image?: any;
+    category?: { name: string; slug: string };
+};
+
+type CategoryType = {
+    name: string;
+    slug: string;
+    products: ProductType[];
+};
+
+export async function getStaticPaths() {
+    const categories = await fetchApi({
+        endpoint: "categories",
+        wrappedByKey: "data",
+        query: {
+            populate: ["products", "products.image", "products.category"],
+        },
+    });
+
+    return categories.map((category: CategoryType) => ({
+        params: { slug: category.slug },
+        props: { category },
+    }));
+}
+
+const { category } = Astro.props as { category: CategoryType };
+---
+
+<BaseLayout pageTitle={category.name}>
+    <h1>{category.name}</h1>
+    <ProductsList products={category.products} />
+</BaseLayout>

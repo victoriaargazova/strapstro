@@ -1,0 +1,21 @@
+{
+  "name": "productimporter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "import": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.54.0"
+  },
+  "dependencies": {
+    "formdata-node": "^6.0.3",
+    "node-fetch": "^3.3.2"
+  }
+}
